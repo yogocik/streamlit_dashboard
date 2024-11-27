@@ -12,7 +12,10 @@ data = pd.read_csv("./dashboard/all_data.csv", index_col=0)
 
 # Display the data table
 st.subheader("All Data From Station (only 100 sample)")
-st.dataframe(data.head(100))
+stations = data['station'].drop_duplicates()
+make_choice = st.sidebar.selectbox('Select station:', stations)
+st.dataframe(data.loc[data["station"] == make_choice].head(100))
+
 
 # Allow user to download data
 csv = data.to_csv(index=False)
